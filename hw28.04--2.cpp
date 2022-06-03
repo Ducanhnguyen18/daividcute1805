@@ -14,21 +14,21 @@ password = "1234";
 }
 };
 
-bool request(string login, string user_login, string user_password)
+bool request(string login)
 {
-try
-{
+User us;
 string password;
 int counter = 0;
 cout << "Введите пароль" << endl;
 cin >> password;
+
 while (true)
 {
-if (login == user_login && password == user_password)
+if (login == us.login && password == us.password)
 {
 return true;
 }
-if ((login != user_login || password != user_password) && counter == 3)
+if ((login != us.login || password != us.password) && counter == 3)
 {
 throw password;
 }
@@ -40,27 +40,29 @@ cin >> password;
 counter++;
 }
 }
-}
-catch(const string str)
-{
-cout << "Не верно попыток больше нет" << endl;
-return false;
-}
 
 }
 
 int main()
 {
-User us;
+try
+{
 bool result;
 setlocale(LC_ALL, "ru");
 string login;
 cout << "Введите логин" << endl;
 cin >> login;
-result = request(login, us.login, us.password);
+result = request(login);
 if (result == true)
 {
-cout <<"Поздравляю вы вошли" << endl;
+cout << "Поздравляю вы вошли" << endl;
 }
+}
+catch (const string str)
+{
+cout << "Не верно попыток больше нет, до свидания :)" << endl;
+return false;
+}
+
 return 0;
 }
